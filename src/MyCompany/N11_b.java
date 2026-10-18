@@ -43,9 +43,6 @@ public class N11_b {
         //Создание обьекта для ввода с клавиатуры
         Scanner in = new Scanner(System.in);
 
-        //println - выводит значение и переводит курсор на новую строку
-        System.out.println("Введите значения x, y, z:");
-
         //ОбЪект in, отвечает за чтение данных
         //.nextDouble() - специальный метод класса Scanner, который заставляет программу останавливаться,
         // ждать, пока пользователь не введет число и не нажмет Enter
@@ -53,9 +50,25 @@ public class N11_b {
         //try - пробуем выполнить код, в котором может возникнуть ошибка
         try {
 
-            double x = in.nextDouble();
-            double y = in.nextDouble();
-            double z = in.nextDouble();
+            //объявляем переменные заранее, так как значения будут присваиваться в разных ветках if/else
+            double x, y, z;
+
+            //args.length - количество переданных аргументов
+            //если передано ровно 3 аргумента, берём значения из них
+            if (args.length == 3) {
+                //Double.parseDouble() - преобразует строку в число типа double
+                //args[0], args[1], args[2] - первый, второй и третий аргументы командной строки
+                x = Double.parseDouble(args[0]);
+                y = Double.parseDouble(args[1]);
+                z = Double.parseDouble(args[2]);
+            } else {
+                //иначе вводим данные с клавиатуры
+                //println - выводит значение и переводит курсор на новую строку
+                System.out.println("Введите значения x, y, z:");
+                x = in.nextDouble();
+                y = in.nextDouble();
+                z = in.nextDouble();
+            }
 
             //локальные переменные типа double в которых инициализируются функции
             //можно подключать модули и использовать их функции если модуль содержиться в том же пакете что и класс
@@ -67,7 +80,9 @@ public class N11_b {
 
             //catch - перехватывает ошибку
             //(InputMismatchException e) - если метод класса Scanner (nextDouble()) ожидает один тип а получает другой
-        } catch (InputMismatchException e) {
+            //NumberFormatException - если в аргументах командной строки передали не число (например, abc)
+            //знак | позволяет перехватить сразу несколько типов ошибок одним блоком catch
+        } catch (InputMismatchException | NumberFormatException e) {
             //вывод сообщения об ошибке
             System.out.println("Ошибка: необходимо вводить только числа.");
         }
